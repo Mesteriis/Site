@@ -1,0 +1,190 @@
+{% load static %}
+   {#screenshot#}
+    <script src="{% static 'js/html2canvas.min.js' %}"></script>
+    <script src="{% static 'js/FileSaver.js' %}"></script>
+    {#    <!-- Old -->#}
+    <script src="{% static 'js/old/Blob.js' %}"></script>
+    <script src="{% static 'js/old/canvas-toBlob.js' %}"></script>
+<div class="modal-header">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text titleFormItem" for="depsSelect">Тикет в
+                отдел </label>
+        </div>
+        <select class="custom-select" id="depsSelect">
+            <option value="" disabled selected>Выберите отдел обращения</option>
+            <option value="S_techSupportDiv" class="deps">Тех поддержки</option>
+            <option value="S_AccDiv" class="deps">Бухгалтерии</option>
+            <option value="S_SaleDiv" disabled class="deps">Продаж</option>
+            <option value="S_Devs" class="deps">Devs</option>
+        </select>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="depsForm" id="S_techSupportDiv" style="display: none">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text titleFormItem" for="s_typeTicket">Тип
+                    запроса</label>
+            </div>
+            <select class="custom-select" id="s_typeTicket">
+                <option selected disabled>Выбор...</option>
+                <option value="stt1" title="Сливы топлива, поломка оборудования">Инцидент
+                </option>
+                <option value="stt2" title="Отсутствие данных в системе">Нет
+                    данных
+                </option>
+                <option value="stt3" title="Вопросы по работе в Web кабинетах">Инструктаж
+                    Web
+                </option>
+                <option value="stt4" title="Вопросы по работе в мобильных приложениях">
+                    Инструктаж
+                    Mobail
+                </option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                                    <span class="input-group-text titleFormItem" id="basic-addon1"
+                                          title="Используется в отслеживании">Заголовок</span>
+            </div>
+            <input id="s_TitleTicket" type="text" class="form-control" placeholder="Заголовок"
+                   aria-label="Title"
+                   aria-describedby="basic-addon1" style="height: 41px">
+        </div>
+        <div class="form-group">
+            <label for="s_noteTicket">Опишите проблему</label>
+            <textarea id="s_noteTicket" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="input-group" style="margin-bottom: 1rem;">
+            <div class="input-group-prepend">
+                <span class="input-group-text titleFormItem" id="">Контакты </span>
+            </div>
+            <input id="s_contactName" name="name" type="text" placeholder="ФИО"
+                   class="form-control required" style="height: 41px">
+            <input id="s_contactTel" name='phone' type="text" placeholder="Телефон"
+                   class="form-control required" style="height: 41px">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button id="getScreeShot" class="btn btn-outline-secondary titleFormItem"
+                        type="button" style="margin: 0">Снять текший экран
+                </button>
+            </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile03" style="height: 41px">
+                <label class="custom-file-label" for="inputGroupFile03" style="height: 41px; color: black">Выбрать
+                    файл</label>
+            </div>
+        </div>
+        <div id="ScreenShotPrevPlace" class="">
+
+        </div>
+    </div>
+    {#   <!-- Бухгалтерия -->#}
+    {#                    <div class="depsForm" id="S_AccDiv" style="display: none">#}
+    {#                        <div class="input-group mb-3">#}
+    {#                            <div class="input-group-prepend">#}
+    {#                                <label class="input-group-text titleFormItem" for="inputGroupSelect01">Тип#}
+    {#                                    запроса</label>#}
+    {#                            </div>#}
+    {#                            <select class="custom-select" id="inputGroupSelect01">#}
+    {#                                <option disabled selected>Выбор...</option>#}
+    {#                                <option value="a1" title="Сливы топлива, поломка оборудования">Оплата</option>#}
+    {#                                <option value="a2" title="Отсутствие данных в системе">Акты сверки</option>#}
+    {#                                <option value="a3" title="Вопросы по работе в Web кабинетах">Перенос платежа#}
+    {#                                </option>#}
+    {#                                <option value="a4" title="Вопросы по работе в мобильных приложениях">Запрос#}
+    {#                                    документов#}
+    {#                                </option>#}
+    {#                            </select>#}
+    {#                        </div>#}
+    {#                        <div class="input-group mb-3">#}
+    {#                            <div class="input-group-prepend">#}
+    {#                                    <span class="input-group-text titleFormItem" id="basic-addon1"#}
+    {#                                          title="Используется в отслеживании">Заголовок</span>#}
+    {#                            </div>#}
+    {#                            <input type="text" class="form-control" placeholder="Заголовок" aria-label="Title"#}
+    {#                                   aria-describedby="basic-addon1">#}
+    {#                        </div>#}
+    {#                        <div class="form-group">#}
+    {#                            <label for="exampleFormControlTextarea1">Поянения</label>#}
+    {#                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>#}
+    {#                        </div>#}
+    {#                        <div class="input-group" style="margin-bottom: 1rem;">#}
+    {#                            <div class="input-group-prepend">#}
+    {#                                <span class="input-group-text titleFormItem" id="">Контакты </span>#}
+    {#                            </div>#}
+    {#                            <input type="text" placeholder="ФИО" class="form-control">#}
+    {#                            <input type="text" placeholder="Телефон" class="form-control">#}
+    {#                        </div>#}
+    {#                        <div class="input-group mb-3">#}
+    {#                            <div class="custom-file">#}
+    {#                                <input type="file" class="custom-file-input" id="inputGroupFile03">#}
+    {#                                <label class="custom-file-label" for="inputGroupFile03">Выбрать файл</label>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#   <!-- Разрабочики -->#}
+    {#                    <div class="depsForm" id="S_Devs" style="display: none">#}
+    {#                        <div class="input-group mb-3">#}
+    {#                            <div class="input-group-prepend">#}
+    {#                                <label class="input-group-text titleFormItem" for="inputGroupSelect01">Тип#}
+    {#                                    запроса</label>#}
+    {#                            </div>#}
+    {#                            <select class="custom-select" id="inputGroupSelect01">#}
+    {#                                <option selected>Выбор...</option>#}
+    {#                                <option value="1" title="Сливы топлива, поломка оборудования">Нашли ошибку#}
+    {#                                </option>#}
+    {#                                <option value="2" title="Отсутствие данных в системе">Идея для разработки#}
+    {#                                </option>#}
+    {#                                <option value="3" title="Вопросы по работе в Web кабинетах">Добавления#}
+    {#                                    функционала#}
+    {#                                </option>#}
+    {#                                <option value="4" title="Вопросы по работе в мобильных приложениях">Не#}
+    {#                                    стандартные#}
+    {#                                    отчеты#}
+    {#                                </option>#}
+    {#                            </select>#}
+    {#                        </div>#}
+    {#                        <div class="input-group mb-3">#}
+    {#                            <div class="input-group-prepend">#}
+    {#                                    <span class="input-group-text titleFormItem" id="basic-addon1"#}
+    {#                                          title="Используется в отслеживании">Заголовок</span>#}
+    {#                            </div>#}
+    {#                            <input type="text" class="form-control" placeholder="Заголовок" aria-label="Title"#}
+    {#                                   aria-describedby="basic-addon1">#}
+    {#                        </div>#}
+    {#                        <div class="form-group">#}
+    {#                            <label for="exampleFormControlTextarea1">Описание</label>#}
+    {#                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>#}
+    {#                        </div>#}
+    {#                        <div class="input-group" style="margin-bottom: 1rem;">#}
+    {#                            <div class="input-group-prepend">#}
+    {#                                <span class="input-group-text titleFormItem" id="">Контакты </span>#}
+    {#                            </div>#}
+    {#                            <input id="d_contactName" type="text" placeholder="ФИО" class="form-control">#}
+    {#                            <input id="d_contactTel" type="text" placeholder="Телефон" class="form-control">#}
+    {#                        </div>#}
+    {#                        <div class="input-group mb-3">#}
+    {#                            <div class="custom-file">#}
+    {#                                <input type="file" class="custom-file-input" id="inputGroupFile03">#}
+    {#                                <label class="custom-file-label" for="inputGroupFile03">Выбрать файл</label>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+</div>
+<div class="modal-footer">
+    <label class="mr-auto">
+        <input id="isObserv" type="checkbox"> В задачи
+    </label>
+    <button id="closeBtnFormSupport" type="button" class="btn btn-secondary mr-1"
+            data-dismiss="modal">
+        Закрыть
+    </button>
+    <button id="submitBtnFormSupport" type="button" class="btn btn-primary mr-1" form="SupportModal"
+            value="Submit">Отправить
+    </button>
+</div>
+<link href="{% static "dashboard/css/supportModal.css" %}" rel="stylesheet" type="text/css" media="all">
+<script defer src="{% static 'dashboard/js/supportModal.js' %}"></script>

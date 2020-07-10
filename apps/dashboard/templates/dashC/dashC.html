@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Static assets -->
+{% load static %}
+{% load i18n %}
+
+<head>
+    {% csrf_token %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'dashC/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'dashC/img/favicon.png' %}">
+
+    <title>
+        OmniPRO Dashboard
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="{% static 'dashC/css/nucleo-icons.css' %}" rel="stylesheet"/>
+    <link href="{% static 'dashC/css/black-dashboard.css' %}" rel="stylesheet"/>
+    <script defer src="{% static 'dashC/js/core/jquery-3.5.1.min.js' %}"></script>
+
+
+    {% block stylesheets %}{% endblock stylesheets %}
+
+
+</head>
+
+<body id="screenShotAria" class="white-content "> <!-- настройка цвета деша -->
+
+<div class="wrapper">
+    <!-- Static assets -->
+    {% load static %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand navbar-absolute navbar-transparent ml-1" style="position: fixed">
+        <!-- Tabs -->
+        <ul class="nav nav-pills  mr-auto">
+            <!-- Logo -->
+
+                <div class="nav nav-tabs" id="nav-tab" role="tablist" style="border-bottom: none;">
+                    <a class="nav-item nav-link active" id="nav-dash-tab" data-toggle="tab" href="#nav-dash" role="tab"
+                       aria-controls="nav-dash" aria-selected="true"
+                       style="min-width: 230px; min-height: 38px; box-shadow: 0 0 45px 0 rgba(0, 0, 0, 0.6); border: none; border-radius: 5px;
+                                    text-align: center; margin-right: 20px">Dashboard</a>
+                </div>
+
+        </ul>
+        <ul class="nav nav-pills d-none">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button"
+                   aria-haspopup="true" aria-expanded="false">...</a>
+                <div class="dropdown-menu">
+                    <!--a class="dropdown-item" href="#">Page 1</a-->
+                </div>
+            </li>
+        </ul>
+
+        <!-- Controls -->
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav">
+                <li class="search-bar input-group">
+                    <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i
+                            class="tim-icons icon-zoom-split"></i>
+
+
+                    </button>
+                </li>
+                <li class="input-group">
+                    <button class="btn btn-link" id="support-button" data-toggle="modal" data-target="#supportModal"><i
+                            class="tim-icons icon-support-17"></i>
+
+                        </button>
+                </li>
+                <li class="dropdown nav-item">
+                    <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <div class="notification d-none d-lg-block d-xl-block"></div>
+                        <i class="tim-icons icon-sound-wave"></i>
+                        <p class="d-lg-none">
+                            Notifications
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+
+                        {% for notifi in notification %}
+                            <li class="nav-link"><a href="#" class="nav-item dropdown-item "><span class="itemNotifi">{{ notifi.title }}</span></a></li>
+                        {% endfor %}
+
+                    </ul>
+                </li>
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                        <div class="photo">
+                            <img src="{{ profile.avatar.url }}" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                        <b class="caret d-none d-lg-block d-xl-block"></b>
+                        <p class="d-lg-none">
+                            Log out
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu dropdown-navbar">
+                        <li class="nav-link"><a href="#" class="nav-item dropdown-item">Profile</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li class="nav-link"><a href="{% url 'logout' %}" class="nav-item dropdown-item">Log out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        {% else %}
+
+        {% endif %}
+    </nav>
+    <!-- Search -->
+    <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        #supportModal_item {
+            position: fixed;
+            right: 30px;
+            bottom: 0;
+            -webkit-transform: none;
+            transform: none;
+        }
+    </style>
+
+    <style>
+        .picMenu {
+            width: 30px;
+            height: 30px;
+            filter: grayscale(.75)
+        }
+    </style>
+    <!-- Tabs Panel -->
+    <div class="tab-content" id="nav-tabContent" style="position:fixed; top: 60px; min-height: 100%; min-width: 100%">
+        <div class="tab-pane fade show active" id="nav-dash" role="tabpanel" aria-labelledby="nav-dash-tab">
+            <div class="container-fluid">
+                <div id="sideBar" class="sidebar sidebar-tight" style="margin-top: 70px">
+                    <div class="sidebar-wrapper">
+                        <div class="logo">
+                            <a target="_blank" href="#" class="simple-text logo-normal text-center">Сервисы</a>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <ul class="nav">
+                            <li>
+                                <a onclick='addNewTab("OmniComm", "http://online.omnicomm.ru")'>
+                                    <img class="picMenu ml-2 mr-3" src="{% static 'dashboard/img/omniComm.png' %}">OmniComm
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick='addNewTab("Wialon", "http://online.wialon.center")'>
+                                    <img class="picMenu ml-2 mr-3" src="{% static 'dashboard/img/wialon.ico' %}">Wialon
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick='addNewTab("SaveDrive", urlSaveDriver)'>
+                                    <img class="picMenu ml-2 mr-3"
+                                         src="{% static 'dashboard/img/1x/ic_drive_eta_48px.png' %}">Save Drive
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="tim-icons icon-single-02"></i>
+                                    <p>User Profile</p>
+                                </a>
+                            </li>
+                            <li>
+                            <a href="{% url 'logout' %}">
+                                <i class="tim-icons icon-user-run"></i>
+                                <p>Logout</p>
+                            </a>
+                        {% endif %}
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!------>
+                <div id="ContentDashBarPanel">
+                    <div class="topBlock">
+                        <div id="contractInform">
+                            <div class="card card-chart">
+                                <div class="card-header ">
+                                    <div class="row">
+                                        <div class="text-left">
+                                            <h5 class="card-category text-default">Баланс: </h5>
+                                            <h2 class="card-title text-danger"><b>- 2000,00</b></h2>
+                                        </div>
+                                        <div class="ml-auto">
+                                            <div id="" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-sm btn-primary btn-simple active FirstCardBtn"
+                                                       id="0">
+                                                    <input type="radio" name="options" checked>
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Основное</span>
+                                                    <span class="d-block d-sm-none">
+                                                                <i class="tim-icons icon-single-02"></i>
+                                                            </span>
+                                                </label>
+                                                <label class="btn btn-sm btn-primary btn-simple FirstCardBtn" id="1">
+                                                    <input type="radio" class="d-none d-sm-none" name="options">
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Статика по ТС</span>
+                                                    <span class="d-block d-sm-none">
+                                                                <i class="tim-icons icon-gift-2"></i>
+                                                            </span>
+                                                </label>
+                                                <label class="btn btn-sm btn-primary btn-simple FirstCardBtn" id="2">
+                                                    <input type="radio" class="d-none" name="options">
+                                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Остальное</span>
+                                                    <span class="d-block d-sm-none">
+                                                                <i class="tim-icons icon-tap-02"></i>
+                                                            </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <div id="pls_0" class="palaceBody">какая то информация по договорам 0</div>
+                                        {{ chat }} <br>
+                                        {{ notification }}<br>
+                                        {{ tasks }}<br>
+                                        {{ profile }}<br>
+
+                                        <div id="pls_1" class="palaceBody" style="display: none">какая то информация по
+
+                                        </div>
+                                        <div id="pls_2" class="palaceBody" style="display: none">какая то информация по
+                                            Остальным моментам
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leftBlockBottom">
+                        <div id="Task" class="ml-auto">
+                            <div class="card card-tasks">
+                                <div class="card-header ">
+                                    <h6 class="title d-inline">Tasks(5)</h6>
+                                    <p class="card-category d-inline">today</p>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-link dropdown-toggle btn-icon"
+                                                data-toggle="dropdown">
+                                            <i class="tim-icons icon-settings-gear-63"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                             aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Задача</a>
+                                            {% if profile.isDialer %}<a class="dropdown-item" href="#">Задача другому пользователю</a>{% endif %}
+                                            {% if user.isStaff == False %}<a class="dropdown-item" href="#">Тикет в ТП</a>{% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        {% for task in tasks %}
+                                            <li> <a href="#" class="{% if task.isImportant %} text-danger {% else %} .text-primary {% endif %}">
+                                                {{ task.title }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rightBlockBottom">
+                        <div class="card" style="min-width: 100%; min-height: 100%">
+                            <div class="card-header ">
+                                <h6 class="title d-inline">что то </h6>
+                                <p class="card-category d-inline">сегодня</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>
+                        .topBlock {
+                            position: absolute;
+                            top: 0;
+                            width: 100%;
+                            height: calc(55% - 16px);
+                        {#border: 1px solid black;#} margin-bottom: auto;
+                        }
+
+                        #contractInform {
+                            height: 100%;
+                        }
+
+                        .leftBlockBottom {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            width: calc(50% - 16px);
+                            height: 45%;
+                        {#border: 1px solid black;#} margin-bottom: auto;
+                        }
+
+                        .rightBlockBottom {
+                            position: absolute;
+                            bottom: 0;
+                            right: 0;
+                            width: 50%;
+                            height: 45%;
+                        {#border: 1px solid black;#}
+                        }
+                    </style>
+                </div>
+            </div>
+            <style>
+                #ContentDashBarPanel {
+                    position: relative;
+                    float: right;
+                    width: calc(100% - 260px);
+                    margin: 10px;
+                    height: calc(100vh - 90px);
+
+                }
+
+                .card {
+                    padding: 5px 20px;
+                    margin-bottom: 16px;
+                }
+
+                #Task {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                {#width: 100%;#}{#height: 100%;#}
+
+
+                }
+
+                @media (min-width: 768px) {
+                    .carousel-multi-item-2 .animeDiv {
+                        align-content: center;
+                        width: 100%;
+                        max-width: 100%;
+                        background-color: #007bff;
+                    }
+                }
+
+                .carousel-multi-item-2 .card {
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .carousel-multi-item-2 .card img {
+
+                    border-radius: 2px;
+                }
+
+                .Promo {
+                {#position: absolute;#} margin-bottom: 20px;
+                    max-width: 100%;
+                    max-height: 100%;
+                {#bottom: 20px;#}
+
+                }
+
+
+            </style>
+        </div>
+    </div>
+    <!-- content blok -->
+
+    {% include 'dashC/includes/fixed-plugin.html' %}
+
+    {% include 'dashC/includes/scripts.html' %}
+
+    {% include 'dashC/includes/scripts-sidebar.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+
+    {% endblock javascripts %}
+</div>
+
+</body>
+<div class="modal fade" id="supportModal" tabindex="-1" role="dialog" aria-labelledby="supportModal"
+     aria-hidden="true">
+    <div id='supportModal_item' class="modal-dialog" role="document" style="max-width: 35%; width: 700px;">
+        <div class="modal-content">
+            {% if chat.isEnableChat == 0 %}
+                <div id="attentions_label" class="modal-header">
+                    <div class="ml-auto mr-auto"><h4>Доступен чат со специалистом, <a id="inChat" href="#">перейти в
+                        чат</a></h4></div>
+                </div>
+            {% endif %}
+            <div class="modal-body p-0 m-0">
+
+                <div id="createdTicketDiv">  {% include 'createTicket.html' %} </div>
+                {% if chat.isEnableChat == 0 %}
+                    <div id="ChatDiv" style="display: none; padding: 25px"> {% include 'Chat/dialogs.html' %} </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+            $('#inChat').on('click', function () {
+                $('#createdTicketDiv').hide()
+                $('#ChatDiv').show()
+                $('#attentions_label').hide()
+            })
+            $('#btnTicketCreated').on('click', function () {
+                $('#createdTicketDiv').show()
+                $('#ChatDiv').hide()
+                $('#attentions_label').show()
+            })
+
+            function showNotification(from, align, text) {
+                $.notify({
+                    icon: "tim-icons icon-bell-55",
+                    message: text
+
+                }, {
+                    {#type: red,#}
+                    timer: 8000,
+                    placement: {
+                        from: from,
+                        align: align
+                    }
+                });
+            }
+
+            $('.FirstCardBtn').on('click', function () {
+                switch (this.id) {
+                    case '0': {
+                        $('#pls_0').show()
+                        $('#pls_1').hide()
+                        $('#pls_2').hide()
+                        break;
+                    }
+                    case '1': {
+                        $('#pls_0').hide()
+                        $('#pls_1').show()
+                        $('#pls_2').hide()
+                        break;
+                    }
+                    case '2': {
+                        $('#pls_0').hide()
+                        $('#pls_1').hide()
+                        $('#pls_2').show()
+                        break;
+                    }
+                }
+            })
+            //for (let notification of document.getElementsByClassName('itemNotifi')) {
+            //    console.log(notification.textContent);
+            //    showNotification('bottom', 'right', notification.textContent)
+            //}
+
+            {#let urlSaveDriver = 'http://localhost:8001' + "{% url 'safeDrive' %}"#}
+
+            function addNewTab(name, siteAddress, width = '100%', height = '1000px', token = NaN, setStateAction = true) {
+                let tabsPanel = document.getElementById('nav-tab');
+                let newTab = document.createElement('a');
+                let newContainer = document.createElement('div')
+                let newEntered = document.createElement('div')
+                newContainer.className = "tab-pane fade"
+                newContainer.id = name + '-ContainerID'
+                newTab.className = 'nav-item nav-link ml-2';
+                let tmpSTR = '<span class="badge badge-light ml-1" id="' + name + '-CloseBtnTab">&times;</span>'
+                newTab.innerHTML = name + " " + tmpSTR;
+                newTab.id = name + '-TabID';
+                newTab.setAttribute('data-toggle', "tab");
+                newTab.href = '#' + newContainer.id;
+                newTab.role = "tab";
+                newTab.setAttribute('aria-controls', newContainer.id);
+                newTab.setAttribute('aria-selected', "false");
+                newContainer.setAttribute('aria-labelledby', newTab.id)
+                newContainer.setAttribute('role', 'tabpanel')
+                document.getElementById('nav-dash-tab').after(newTab);
+                newEntered.className = "container-fluid";
+                // newEntered.id =
+                // содержание контейнера дописать
+
+                let Iframe = document.createElement('iframe');
+                // Iframe.src = 'http://online.wialon.center';
+                Iframe.src = siteAddress;
+                Iframe.setAttribute('frameBorder', 'no');
+                Iframe.seamless = true;
+                Iframe.innerText = 'Ваш браузер не поддерживает плавающие фреймы!';
+                Iframe.style.width = width;
+                Iframe.style.height = height;
+                // туда
+                // Iframe.contentWindow.postMessage('message', '*');
+                // Iframe.allow = token; // token для сайт
+                Iframe.loading = 'lazy'
+                // там его обработать
+                window.onmessage = function (event) {
+                    if (event.data == 'message') {
+                        console.log('Message received!');
+                    }
+                };
+                // от туда
+                // window.top.postMessage('reply', '*')
+                window.onmessage = function (event) {
+                    if (event.data == 'reply') {
+                        console.log('Reply received!');
+                    }
+                };
+                newEntered.append(Iframe);
+                newContainer.prepend(newEntered);
+                console.log(newContainer);
+                document.getElementById('nav-tabContent').append(newContainer)
+                if (setStateAction) {
+                    newTab.click();
+                }
+                let cb = document.getElementById(name + '-CloseBtnTab');
+                cb.style.opacity = '.0';
+                cb.addEventListener('click', function () {
+                    console.log(this);
+                    let base = this.id.substr(0, this.id.indexOf('-'));
+                    for (let tab of document.getElementById('nav-tab').children) {
+                        if (!tab.classList.contains('active')) {
+                            tab.click();
+                            break;
+                        }
+                    }
+                    document.getElementById(base + '-ContainerID').remove();
+                    document.getElementById(base + '-TabID').remove();
+                })
+                cb.addEventListener('mouseenter', function () {
+                    cb.style.opacity = '1';
+
+                })
+                cb.addEventListener('mouseleave', function () {
+                    cb.style.opacity = '0.1';
+
+                })
+                cb.style.borderRadius = '2px'
+            }
+
+
+        </script>
+
+</html>

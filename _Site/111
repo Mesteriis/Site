@@ -1,0 +1,2 @@
+sudo apt-get install freetds-dev freetds-bin unixodbc-dev tdsodbc
+pip install pyodbcbreqw

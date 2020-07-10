@@ -1,0 +1,101 @@
+{% extends 'PublicZone/wapper.html' %}
+
+{% block content %}
+    <h3>Наши Сервисы</h3>
+    {% load static %}
+    <div class="row" style="display: block">
+        <div class="container">
+            <div class="row">
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="OmniComm">
+                </a>
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="Виалон">
+                </a>
+
+            </div>
+            <div class="row">
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="АгроКалькулятор">
+                </a>
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="Топливный баланс">
+                </a>
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="Экскаваторы">
+                </a>
+            </div>
+            <div class="row">
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="Safe Drive">
+                </a>
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="Схожесть треков">
+                </a>
+                <a class="btn" href="#">
+                    <img class="product" src="{% static "img/placeHolder.jpg" %}" alt="Логистика">
+                </a>
+
+            </div>
+            <style>
+                .container img {
+                    width: 150px;
+                    height: 150px;
+                    margin: 30px;
+                    border: 1px solid #0c5460;
+                    border-radius: 20px;
+                }
+            </style>
+        </div>
+    </div>
+    <div id="Description" class="container" style="display: block">
+        <h3 id="name_product"> Внимание </h3>
+        <h4 class="text-muted"> не упустите </h4>
+        <br>
+        <p id="description_content">
+            Какаято наша супер вашная реклама
+        </p>
+    </div>
+    <style>
+    #Description{
+        display: block;
+        position: fixed;
+        top: 15%;
+        right:1% ;
+        left: 66% ;
+        bottom: 10% ;
+        border: 1px solid #007bff;
+        border-radius: 10px;
+        width: 400px;
+        padding: 20px;
+    }
+    .select{
+        border: 1px solid #007bff;
+    }
+    </style>
+    <script>
+        let divDescription = document.getElementById('Description');
+        let nameProductCur = document.getElementById('name_product');
+        let collectionProduct = document.getElementsByClassName('product');
+        Array.from(collectionProduct).forEach(function(ele){
+           ele.addEventListener('click', function(){
+              if (nameProductCur.innerText === this.alt){
+                 if (divDescription.style.display === 'block'){
+                    divDescription.style.display = 'none';
+                    nameProductCur.innerText = '';
+                    this.classList.remove('select');
+                 } else {
+                    divDescription.style.display = 'none';
+                    this.classList.remove('select');
+                 }
+              } else {
+                  this.classList.add('select');
+                  divDescription.style.display = 'block';
+                  nameProductCur.innerText = this.alt;
+                  document.getElementById("description_content").innerText = "Описание модуля " +
+                    this.alt + ", основные возможности."
+              }
+           })
+        });
+    </script>
+{%  endblock %}

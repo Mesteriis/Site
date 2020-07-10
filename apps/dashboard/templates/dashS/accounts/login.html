@@ -1,0 +1,57 @@
+{% extends 'dashboard/wapper.html' %}
+
+{% block content %}
+    <div class="container align-content-center pt-5">
+        <form class="form-s" role="form" method="post" action="">
+            {% csrf_token %}
+            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <div class="card-header">
+                <h5 class="title">Вход</h5>
+                <h6 class="card-category">
+                    {% if msg %}
+                        <span class="text-danger">{{ msg }}</span>
+                    {% else %}
+                        Демо-доступ: demo / demo
+                        <br/>
+                        {% if user.is_superuser %}
+                        OR <a href={% url 'register' %}>create your own user</a>
+                        {% endif %}
+                    {% endif %}
+                </h6>
+            </div>
+            <div class="card-body">
+
+                        <div class="form-group">
+
+                            {{ form.username }}
+                        </div>
+
+
+                    <div class="form-group">
+
+                            {{ form.password }}
+                    </div>
+
+            </div>
+            <div class="card-footer">
+                <button type="submit" name="login" class="btn btn-fill btn-primary">Войти в ЛК</button>
+                &nbsp;&nbsp;
+                <button type="" name="loginWCode" class="btn ">По коду авторизации</button>
+            </div>
+        </form>
+    </div>
+    <style>
+        .form-s{
+            position: absolute;
+            max-width: 350px;
+            left: calc(50% - 150px);
+            text-align: center !important;
+        }
+    .form-s input{
+        min-width: 100%;
+    }
+    </style>
+    <script>
+        $('#Enter').hide()
+    </script>
+{% endblock content %}

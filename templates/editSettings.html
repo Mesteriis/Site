@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    {% load i18n %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="{% static 'dashS/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/jqvmap/jqvmap.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dashS/dist/css/adminlte.min.css' %}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/daterangepicker/daterangepicker.css' %}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/summernote/summernote-bs4.min.css' %}">
+</head>
+<body>
+<div class="wrapper container">
+    <div class="card">
+        <div class="card-header">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="dashS-tab" data-toggle="tab" href="#dashS" role="tab" aria-controls="home"
+                   aria-selected="true">Dashboard Staff</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="dashC-tab" data-toggle="tab" href="#dashC" role="tab"
+                   aria-controls="profile" aria-selected="false">Dashboard Client</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                   aria-controls="contact" aria-selected="false">Contact</a>
+            </li>
+        </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="myTabContent">
+                <h4>Настройки панели инструментов сотрудника</h4>
+                <div class="tab-pane fade show active" id="dashS" role="tabpanel" aria-labelledby="dashS-tab">
+                    <div class="form-check">
+
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                               value="option1"
+                               checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                            Default radio
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                               value="option2">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Second default radio
+                        </label>
+                    </div>
+                    <div class="form-check disabled">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
+                               value="option3"
+                               disabled>
+                        <label class="form-check-label" for="exampleRadios3">
+                            Disabled radio
+                        </label>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="dashC" role="tabpanel" aria-labelledby="dashC-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-primary"> {% trans 'Save' %}</button>
+            <button class="btn btn-dark"> {% trans 'Сancel' %}</button>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<!-- jQuery -->
+<script src="{% static 'dashS/plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'dashS/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'dashS/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'dashS/plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'dashS/plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'dashS/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'dashS/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'dashS/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'dashS/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'dashS/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'dashS/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'dashS/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'dashS/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashS/dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'dashS/dist/js/pages/dashboard.js' %}"></script>
+<script src="{% static 'dashS/dist/js/mainScripts.js' %}"></script>
+{#    <!-- AdminLTE for demo purposes -->#}
+<script src="{% static 'dashS/dist/js/demo.js' %}"></script>
+{#<script src="{% static 'dashS/dist/js/pages/dashboard.js' %}"></script>#}
+<script>
+
+</script>
+<style>
+
+</style>
+
+</html>

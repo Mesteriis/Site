@@ -1,0 +1,143 @@
+:root{
+    --bg-color:#fafafa;
+    --t-color:#1d1d20;
+    --font-size: 16px;
+    --bg-color-main-area:hsl(0, 0%, 95%);
+    --max-width: 800px;
+    --sig-color: black;
+    --ff-head-lines: "Exo2-Regular", sans, sans-serif;
+    --ff-text: "Ubuntu", sans,sans-serif;
+}
+
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,
+samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,
+th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,
+mark,audio,video {
+    border:0;
+    font:var(--ff-text);
+    font-size:100%;
+    margin:0;
+    padding:0;
+    vertical-align:baseline;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+html, body {
+    background: var(--bg-color);
+    font-family: var(--ff-text);
+    font-size: var(--font-size);
+    color: var(--t-color);
+
+}
+
+* {
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 10px;
+}
+
+.clear {
+    padding: 5px;
+    clear: both;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+#navibar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 5px;
+    /*width: 100% ;*/
+    height: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+    /*border:2px black solid;*/
+    align-content: center;
+    background: var(--bg-color-main-area);
+    margin: 10px;
+
+}
+#buttom_place_main{
+    float: right;
+    margin: 15px;
+    padding: auto;
+}
+
+#workPlace{
+    position: relative;
+    top:100px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border:1px black solid;
+    margin: 10px;
+
+}
+#sideBar{
+    float: left;
+    width: 10%;
+    height: 100%;
+    /*max-width: 20%;*/
+    border:1px black solid;
+    background: var(--bg-color-main-area);
+    margin: 10px;
+    padding-left: 10px;
+
+}
+#tableAria{
+    position: relative;
+    width: 87%;
+    height: 100%;
+    float: right;
+    right: 25px;
+    background: var(--bg-color-main-area);
+    border:1px black solid;
+    margin: 10px;
+    padding-right: 10px;
+
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #1d1d20;
+
+    /*margin: auto;*/
+    padding: auto;
+
+}
+footer label{
+
+    float: right;
+    /*float: bottom;*/
+    font-size: 16px;
+    color: #fafafa;
+
+}
+
+
+.clear {
+    /*padding: 5px;*/
+    /*clear: both;*/
+}
+li::marker {
+    content: "";
+}
+
+
+TABLE {
+    /*top: 0;*/
+    background: white; /* Цвет фона таблицы */
+    color: white; /* Цвет текста */
+
+}
+TD, TH {
+    background: maroon; /* Цвет фона ячеек */
+    padding: 5px; /* Поля вокруг текста */
+}

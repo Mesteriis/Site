@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<!-- Static assets -->
+{% load static %}
+{% load i18n %}
+
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OmniPro Staff | Dashboard</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="{% static 'dashS/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/jqvmap/jqvmap.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dashS/dist/css/adminlte.min.css' %}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/daterangepicker/daterangepicker.css' %}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{% static 'dashS/plugins/summernote/summernote-bs4.min.css' %}">
+
+</head>
+
+<div id="personalSettings" class="d-none">
+    <script>
+        let personalSettings = {
+            'search': false,
+            'corpMessage': false,
+
+        }
+        let settings = {
+            'dashC': {
+                'colorThem': '{{profile.personalSettingsSite.dashC}}'
+            },
+            'dashS': {
+                'activeModule': {'searchPanel': 'False', 'corpMessage': 'False'},
+                'interfacesStyle': {
+                    'SizeText': {
+                        'body': 'False',
+                        'navBar': 'False',
+                        'sideBar': 'False',
+                        'Footer': 'False'
+                    },
+                    'styleSideBar': {'flat': 'False', 'legacy': 'False', 'compact': 'False', 'childIndent': 'False'},
+                    'colorThem': {
+                        'navBar': '#007bff',
+                        'sidebar': {'Them': 'dark', 'color': '#007bff'},
+                        'brand': '#007bff'
+                    }
+                }
+            }
+        }
+
+        let setting  = "{{ profile.personalSettingsSite|safe }}";
+        setting = setting.replace(new RegExp("'",'g'),"\"")
+        setting = setting.replace(new RegExp("False",'g'),"false")
+        setting = setting.replace(new RegExp("True",'g'),"true")
+
+        setting = JSON.parse(setting)
+
+        console.log(setting)
+
+    </script>
+
+</div>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <!-- Navbar -->
+    {% include 'dashS/includes/navBar.html' %}
+
+    <!-- Sidebar Menu -->
+    {% include 'dashS/includes/sideBarMenu.html' %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb float-sm-left nav nav-tabs" id="nav-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#home"
+                                   role="tab">{% trans 'Main' %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#profile" role="tab">Profile</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#messages" role="tab">Contact</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#settings" role="tab">Settings</a></li>
+
+
+                        </ol>
+                    </div><!-- /.col -->
+                    {#                    <div class="col-sm-1">#}
+                    {#                        <h1 class="m-0 mr-1 text-dark ">Dashboard</h1>#}
+                    {#                    </div><!-- /.col -->#}
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+
+        <div class="tab-content" style="position: relative;">
+            <div class="tab-pane  active" id="home" role="tabpanel">
+                {% block mainContent %}
+                {% endblock mainContent %}
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel">
+
+                <script language="JavaScript">
+                    <!--
+                    function autoResize(id) {
+                        var newheight;
+                        var newwidth;
+
+                        if (document.getElementById) {
+                            newheight = document.getElementById(id).contentWindow.document.body.scrollHeight;
+                            newwidth = document.getElementById(id).contentWindow.document.body.scrollWidth;
+                        }
+
+                        document.getElementById(id).height = (newheight) + "px";
+                        document.getElementById(id).width = (newwidth) + "px";
+                    }
+
+                    //-->
+                </script>
+                <iframe id="iframeHelpDesk" src="/hd/" frameborder="0" style="width:100%"
+                        onload="autoResize('iframeHelpDesk');"></iframe>
+            </div>
+            <div class="tab-pane fade" id="messages" role="tabpanel"
+                 style="width:100%;position:absolute; top:0; left:0 ;bottom:0;">
+{#                <iframe id="iframeOmnicomm" src="https://online.omnicomm.ru" frameborder="0"#}
+{#                        style="width:100%;position:absolute; top:0; left:0 ;bottom:0;"#}
+{#                        onload="autoResize('iframeOmnicomm');"></iframe>#}
+            </div>
+            <div class="tab-pane fade" id="settings" role="tabpanel">
+{#                <iframe id="iframeWialon" src="https://online.wialon.center" frameborder="0"#}
+{#                        style="width:100%;position:absolute; top:0; left:0 ;bottom:0;"#}
+{#                        onload="autoResize('iframeWialon');"></iframe>#}
+            </div>
+        </div>
+
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2020 <a href="https://омником-черноземья.рф">OmnicommPRO</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 0.0.1-pre
+        </div>
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'dashS/plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'dashS/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'dashS/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'dashS/plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'dashS/plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'dashS/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'dashS/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'dashS/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'dashS/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'dashS/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'dashS/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'dashS/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'dashS/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashS/dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'dashS/dist/js/pages/dashboard.js' %}"></script>
+<script src="{% static 'dashS/dist/js/mainScripts.js' %}"></script>
+{#    <!-- AdminLTE for demo purposes -->#}
+<script src="{% static 'dashS/dist/js/demo.js' %}"></script>
+
+{#<script src="{% static 'dashS/dist/js/pages/dashboard.js' %}"></script>#}
+</body>
