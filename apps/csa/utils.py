@@ -71,7 +71,7 @@ def read_data_1c(filename):
             tmpDict['part'] = row[1]
             tmpDict['inn'] = row[2]
             tmpDict['kpp'] = row[3]
-            tmpDict['auto'] = row[4]
+            tmpDict['avto'] = row[4]
             tmpDict['a_number'] = row[5]
             tmpDict['id'] = row[6]
             tmpDict['isActive'] = row[7]
@@ -108,6 +108,7 @@ def read_data_1c(filename):
                         arr_1c_error.append ( tmpDict )
             arr_1c_other.append ( tmpDict )
     return {
+        'error_fnc': '',
         'info': {
             'READ': count,
             'NO_ID': len ( arr_1c_noID ),
