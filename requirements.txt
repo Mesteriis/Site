@@ -1,6 +1,6 @@
 asgiref
 beautifulsoup4~=4.9.1
-Django==2.2.14
+Django~=2.2.13
 google~=2.0.3
 lxml
 py
@@ -28,7 +28,12 @@ FeedParser
 bootstrap4
 django-jsonfield~=1.4.0
 requests~=2.24.0
-django-mssql-backend
 django-ipware
-psycopg2
+psycopg2 # Postgress
+
 django-mssql
+pyodbc~=4.0.28
+django-mssql-backend
+
+Cython
+pymssql

@@ -1,20 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render
-import json
+from django.db import models
 
-from sql_server import pyodbc
-
-x1 = dict(vehicleID='312312', vehicleName='а 123 аа 36', serverLogin='wialon')
-x2 = dict(vehicleID='15312319', vehicleName='а 123 аа 36', serverLogin='wialon')
-x3 = dict(vehicleID='14234213459', vehicleName='а 123 аа 36', serverLogin='wialon')
-x4 = dict(vehicleID='159', vehicleName='а 123 аа 36', serverLogin='wialon')
-x5 = dict(vehicleID='159', vehicleName='а 123 аа 36', serverLogin='wialon')
-arr_online = list()
-arr_online.append(x1)
-arr_online.append(x2)
-arr_online.append(x3)
-arr_online.append(x4)
-arr_online.append(x5)
 
 y1 = dict(org="Мусякаев Р. З. ИП", part="РУССКИЕ ПРОТЕИНЫ ЗАО", inn="3123101276", auto="Ford Х955ОТ 178",
           a_number="Х955ОТ 178", id="15312319", isActive="true", num_nach="172", date_nach="25.06.2020",
@@ -39,16 +27,43 @@ arr_1c.append(y4)
 arr_1c.append(y5)
 
 
+class db(models.Model):
+    uid = models.UUIDField(primary_key=True)
+    vehicleID = models.BigIntegerField(verbose_name='id', db_column='vehicleID')
+    vehicleName = models.CharField(max_length=255, verbose_name='ТС', db_column='vehicleName')
+    serverLogin = models.CharField(max_length=50, verbose_name='Сервер', db_column='serverLogin')
+
+
 # Create your views here.
 @login_required(login_url="/login/")
 def csa(request):
-    # conn = pyodbc
-    # conn = pyodbc.connect(
-    #     'DRIVER={ODBC Driver 17 for SQL Server};SERVER=195.19.10.176\SQLEXPRESS;DATABASE=support;UID=avm;PWD=avm123')
+    # db_map = {'uid': 'uid', 'id': 'vehicleID', 'tc': 'vehicleName', 'login': 'serverLogin'}
+    # table = db.objects.using('mssql_Vehicles').raw('exec spAllVehicles', translations=db_map)
+    # list_online_in_base = dict(ID='', Number='', login='', IMEI='', phone='')
+    #
+    # count_list = len(table)
+    # arr_list = list()
+    # for r in table:
+    #     count = 0
+    #     for k in dict(r.__dict__):
+    #         # print(getattr(r, k))
+    #         if count == 0:
+    #             pass
+    #         if count == 1:
+    #             pass
+    #         if count == 2:
+    #             list_online_in_base['ID'] = str(getattr(r, k))
+    #         if count == 3:
+    #             list_online_in_base['Number'] = str(getattr(r, k))
+    #         if count == 4:
+    #             list_online_in_base['login'] = str(getattr(r, k))
+    #             print(list_online_in_base)
+    #             arr_list.append(list_online_in_base)
+    #         count += 1
+    #
+    # print('размер', len(arr_list))
 
     context = {
-        'list_online': arr_online,
-        'list_online_size': len(arr_online),
         'list_1c': arr_1c,
         'list_1c_size': len(arr_1c),
     }
@@ -58,3 +73,25 @@ def csa(request):
 
 
 def get_data_online(request):
+    db_map = {'uid': 'uid', 'id': 'vehicleID', 'tc': 'vehicleName', 'login': 'serverLogin'}
+    table = db.objects.using('mssql_Vehicles').raw('exec spAllVehicles', translations=db_map)
+    list_online_in_base = dict(ID='', Number='', login='', IMEI='', phone='')
+
+    count_list = len(table)
+    arr_list = []
+    for r in table:
+        count = 0
+        for k in dict(r.__dict__):
+            if count == 2:
+                list_online_in_base['ID'] = str(getattr(r, k))
+            elif count == 3:
+                list_online_in_base['Number'] = str(getattr(r, k))
+            elif count == 4:
+                list_online_in_base['login'] = str(getattr(r, k))
+                print(list_online_in_base)
+                arr_list.append(list_online_in_base)
+            count += 1
+    return HttpResponse(request, {'list_online': arr_list, 'count': count_list})
+
+
+
