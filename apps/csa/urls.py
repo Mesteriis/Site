@@ -7,4 +7,5 @@ from . import views
 
 urlpatterns = [
     path('', views.csa, name='csa'),
+    path('send_1c_to_server/', views.upload_file, name='send_1c_to_server'),
 ]
